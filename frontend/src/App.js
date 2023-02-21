@@ -40,7 +40,7 @@ const App = () => {
           <Route exact path="/mbtaAlerts" element={<MbtaAlertsPage />} />
           <Route exact path="/contactsPage" element={<ContactsPage />} />
           <Route exact path="/mbtaLiveMap" element={<MbtaLiveMap />} />
-          <Route exact path = "/mbtaFares" element={<MbtaFares />} />
+          <Route exact path="/mbtaFares" element={<MbtaFares />} />
           <Route path="/privateUserProfile" element={<PrivateUserProfile />} />
           
         </Routes>
