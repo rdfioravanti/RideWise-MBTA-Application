@@ -25,8 +25,10 @@ export default function Navbar() {
       <Nav className="me-auto">
         <Nav.Link href="/">Start</Nav.Link>
         <Nav.Link href="/home">Home</Nav.Link>
-        <Nav.Link href="/mbtaAlerts">MBTA Alerts</Nav.Link>
-        <Nav.Link href="/mbtaRoutesPage">MBTA Routes</Nav.Link>
+        <Nav.Link href="/mbtaAlerts">Alerts</Nav.Link>
+        <Nav.Link href="/mbtaRoutesPage">Routes</Nav.Link>
+        <Nav.Link href="/mbtaLiveMap">Live Map</Nav.Link>
+        <Nav.Link href="/mbtaFares">Fares</Nav.Link>
         <Nav.Link href="/contactsPage">Contact</Nav.Link>
         <Nav.Link href="/privateUserProfile">Profile</Nav.Link>
       </Nav>

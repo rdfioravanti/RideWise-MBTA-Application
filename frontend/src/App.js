@@ -10,7 +10,9 @@ import LandingPage from "./components/pages/landingPage";
 import HomePage from "./components/pages/homePage";
 import Login from "./components/pages/loginPage";
 import Signup from "./components/pages/registerPage";
-import ContactsPage from "./components/pages/contactsPage"
+import ContactsPage from "./components/pages/contactsPage";
+import MbtaLiveMap from "./components/pages/mbtaLiveMap";
+import MbtaFares from "./components/pages/mbtaFares";
 import PrivateUserProfile from "./components/pages/privateUserProfilePage";
 import { createContext, useState, useEffect } from "react";
 import getUserInfo from "./utilities/decodeJwt";
@@ -37,6 +39,8 @@ const App = () => {
           <Route exact path="/mbtaRoutesPage" element={<MbtaRoutesPage />} />
           <Route exact path="/mbtaAlerts" element={<MbtaAlertsPage />} />
           <Route exact path="/contactsPage" element={<ContactsPage />} />
+          <Route exact path="/mbtaLiveMap" element={<MbtaLiveMap />} />
+          <Route exact path = "/mbtaFares" element={<MbtaFares />} />
           <Route path="/privateUserProfile" element={<PrivateUserProfile />} />
           
         </Routes>
