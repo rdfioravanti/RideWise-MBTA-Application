@@ -3,7 +3,7 @@ For both the Front End and Back End servers, you must run the following command 
 npm install
 
 Also, for the Front End you must run the following command to ensure Liv eMap functionality:
-npm install --save react-map-gl mapbox-gl
+npm install leaflet react-leaflet
 
 
 
