@@ -1,49 +1,67 @@
-import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import React, { useEffect, useState } from "react";
+import { Map, View } from "ol";
+import TileLayer from "ol/layer/Tile";
+import OSM from "ol/source/OSM";
+import VectorLayer from "ol/layer/Vector";
+import VectorSource from "ol/source/Vector";
+import Feature from "ol/Feature";
+import Point from "ol/geom/Point";
+import { fromLonLat } from "ol/proj";
+import { Style, Icon } from "ol/style";
+import axios from "axios";
 
-const MBTA_API_KEY = 'YOUR_API_KEY_HERE'; // Replace with your own API key
+const MapContainer = () => {
+  const [map, setMap] = useState(null);
 
-function Map() {
-  const [vehicles, setVehicles] = useState([]);
-
-  // Retrieve vehicle data from the MBTA API and update state
   useEffect(() => {
-    const fetchVehicles = async () => {
-      try {
-        const response = await fetch(`https://api-v3.mbta.com/vehicles`);
-        const data = await response.json();
-        setVehicles(data.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    // Fetch vehicle data every 15 seconds
-    const interval = setInterval(() => {
-      fetchVehicles();
-    }, 15000);
-
-    fetchVehicles();
-
-    return () => clearInterval(interval);
+    const initialMap = new Map({
+      target: "map",
+      layers: [
+        new TileLayer({
+          source: new OSM(),
+        }),
+      ],
+      view: new View({
+        center: fromLonLat([-71.1, 42.3]),
+        zoom: 12,
+      }),
+    });
+    setMap(initialMap);
   }, []);
 
-  return (
-    <MapContainer center={[42.3601, -71.0589]} zoom={12} style={{ height: '100vh', width: '100vw' }}>
-      <TileLayer
-        attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      {vehicles.map(vehicle => (
-        <Marker key={vehicle.id} position={[vehicle.attributes.latitude, vehicle.attributes.longitude]}>
-          <Popup>
-            <p>Vehicle ID: {vehicle.id}</p>
-            <p>Vehicle Bearing: {vehicle.attributes.bearing}</p>
-          </Popup>
-        </Marker>
-      ))}
-    </MapContainer>
-  );
-}
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get(
+        "https://api-v3.mbta.com/vehicles?filter[route]=1&include=trip"
+      );
+      const features = response.data.data.map((vehicle) => {
+        const [longitude, latitude] = vehicle.attributes["longitude"]
+          ? [vehicle.attributes.longitude, vehicle.attributes.latitude]
+          : [null, null];
+        const geometry = new Point(fromLonLat([longitude, latitude]));
+        const style = new Style({
+          image: new Icon({
+            src: "https://openlayers.org/en/latest/examples/data/icon.png",
+            scale: 0.5,
+          }),
+        });
+        const feature = new Feature(geometry);
+        feature.setStyle(style);
+        return feature;
+      });
+      const vectorLayer = new VectorLayer({
+        source: new VectorSource({
+          features,
+        }),
+      });
+      map.addLayer(vectorLayer);
+    };
+    if (map !== null) {
+      fetchData();
+    }
+  }, [map]);
 
-export default Map;
+  return <div id="map" style={{ width: "100%", height: "100vh" }}></div>;
+};
+
+export default MapContainer;
