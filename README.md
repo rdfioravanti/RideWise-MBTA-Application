@@ -1,3 +1,13 @@
+PLEASE READ FIRST
+For both the Front End and Back End servers, you must run the following command to ensure proper functionality:
+npm install
+
+Also, for the Front End you must run the following command to ensure Liv eMap functionality:
+npm install --save react-map-gl mapbox-gl
+
+
+
+
 # mern-user-skeleton
 This MERN stack implementation creates a small web application that lets users register, login, view a home page, and logout. 
 
