@@ -3,8 +3,7 @@ For both the Front End and Back End servers, you must run the following command 
 npm install
 
 Also, for the Front End you must run the following command to ensure Liv eMap functionality:
-npm install react react-dom leaflet
-npm install react-leaflet
+npm install ol axios
 
 
 
