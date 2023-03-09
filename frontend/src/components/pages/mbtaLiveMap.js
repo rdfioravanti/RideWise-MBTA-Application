@@ -1,23 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import ReactMapGL, { Marker } from 'react-map-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import React, { useState, useEffect } from 'react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 
 const MBTA_API_KEY = 'YOUR_API_KEY_HERE'; // Replace with your own API key
 
-function App() {
-  const [viewport, setViewport] = useState({
-    latitude: 42.3601,
-    longitude: -71.0589,
-    zoom: 12
-  });
-
+function Map() {
   const [vehicles, setVehicles] = useState([]);
 
   // Retrieve vehicle data from the MBTA API and update state
   useEffect(() => {
     const fetchVehicles = async () => {
       try {
-        const response = await fetch(`https://api-v3.mbta.com/vehicles?api_key=${MBTA_API_KEY}&filter[route_type]=3&include=trip`);
+        const response = await fetch(`https://api-v3.mbta.com/vehicles`);
         const data = await response.json();
         setVehicles(data.data);
       } catch (error) {
@@ -36,21 +29,21 @@ function App() {
   }, []);
 
   return (
-    <ReactMapGL
-      {...viewport}
-      width="100vw"
-      height="100vh"
-      mapStyle="mapbox://styles/mapbox/streets-v11"
-      mapboxApiAccessToken="YOUR_MAPBOX_API_KEY_HERE" // Replace with your own Mapbox API key
-      onViewportChange={nextViewport => setViewport(nextViewport)}
-    >
+    <MapContainer center={[42.3601, -71.0589]} zoom={12} style={{ height: '100vh', width: '100vw' }}>
+      <TileLayer
+        attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
       {vehicles.map(vehicle => (
-        <Marker key={vehicle.id} latitude={vehicle.attributes.latitude} longitude={vehicle.attributes.longitude}>
-          <img src="/bus-icon.png" alt="Bus icon" style={{ width: '24px', height: '24px', transform: `rotate(${vehicle.attributes.bearing}deg)` }} />
+        <Marker key={vehicle.id} position={[vehicle.attributes.latitude, vehicle.attributes.longitude]}>
+          <Popup>
+            <p>Vehicle ID: {vehicle.id}</p>
+            <p>Vehicle Bearing: {vehicle.attributes.bearing}</p>
+          </Popup>
         </Marker>
       ))}
-    </ReactMapGL>
+    </MapContainer>
   );
 }
 
-export default App;
+export default Map;
