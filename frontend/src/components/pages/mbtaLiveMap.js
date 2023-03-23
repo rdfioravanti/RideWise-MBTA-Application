@@ -12,6 +12,7 @@ import axios from "axios";
 
 const MapContainer = () => {
   const [map, setMap] = useState(null);
+  const [selectedType, setSelectedType] = useState("All");
 
   useEffect(() => {
     const initialMap = new Map({
@@ -30,11 +31,16 @@ const MapContainer = () => {
   }, []);
 
   useEffect(() => {
+    let intervalId;
     const fetchData = async () => {
-      const response = await axios.get(
-        "https://api-v3.mbta.com/vehicles?filter[route]=1&include=trip"
-      );
-      const features = response.data.data.map((vehicle) => {
+      const response = await axios.get("https://api-v3.mbta.com/vehicles");
+      const filteredData = response.data.data.filter((vehicle) => {
+  if (selectedType === "All" || vehicle.attributes.vehicle_type === selectedType) {
+    return true;
+  }
+  return false;
+});
+      const features = filteredData.map((vehicle) => {
         const [longitude, latitude] = vehicle.attributes["longitude"]
           ? [vehicle.attributes.longitude, vehicle.attributes.latitude]
           : [null, null];
@@ -54,14 +60,35 @@ const MapContainer = () => {
           features,
         }),
       });
-      map.addLayer(vectorLayer);
+      if (map) {
+        map.removeLayer(map.getLayers().item(1));
+        map.addLayer(vectorLayer);
+      }
     };
-    if (map !== null) {
-      fetchData();
-    }
-  }, [map]);
 
-  return <div id="map" style={{ width: "100%", height: "100vh" }}></div>;
+    intervalId = setInterval(() => {
+      fetchData();
+    }, 3000);
+
+    return () => clearInterval(intervalId);
+  }, [map, selectedType]);
+
+  return (
+    <div style={{ width: "100vw", height: "100vh", display: "flex", justifyContent: "flex-start" }}>
+      <div id="map" style={{ width: "80%", height: "100%" }}></div>
+      <div style={{ width: "20%", height: "100%", backgroundColor: "#f2f2f2", padding: "20px" }}>
+        <h3>Filter by Vehicle Type</h3>
+        <select value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
+          <option value="All">All</option>
+          <option value="bus">Bus</option>
+          <option value="subway">Subway</option>
+          <option value="light_rail">Light Rail</option>
+          <option value="commuter_rail">Commuter Rail</option>
+          <option value="ferry">Ferry</option>
+        </select>
+      </div>
+    </div>
+  );
 };
 
 export default MapContainer;
