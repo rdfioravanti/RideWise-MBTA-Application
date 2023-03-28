@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 
 const ContactList = () => {
   const [contacts, setContacts] = useState([
-    { id: 1, name: 'Information & Support', phone: '617-222-3200' },
-    { id: 2, name: 'Emergency Contacts:  Transit Police', phone: '617-222-1212' },
-    { id: 3, name: 'Report a railroad crossing gate issue', phone: '800-522-8236' },
+    { id: 1, name: 'Information & Support', phone: ' 617-222-3200' },
+    { id: 2, name: 'Emergency Contacts:  Transit Police', phone: ' 617-222-1212' },
+    { id: 3, name: 'Report a railroad crossing gate issue', phone: ' 800-522-8236' },
   ]);
 
   return (
@@ -13,7 +13,7 @@ const ContactList = () => {
       <table>
         <thead>
           <tr>
-            <th>Name</th>
+            
             <th>Phone</th>
           </tr>
         </thead>
