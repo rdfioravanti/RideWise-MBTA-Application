@@ -3,37 +3,27 @@ import getUserInfo from '../utilities/decodeJwt';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import ReactNavbar from 'react-bootstrap/Navbar';
+import './Navbar.css';
 
-
-// Here, we display our Navbar
 export default function Navbar() {
-  // We are pulling in the user's info but not using it for now.
-  // Warning disabled: 
-  // eslint-disable-next-line
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState({});
 
   useEffect(() => {
-  setUser(getUserInfo())
-  }, [])
-  
-  // if (!user) return null   - for now, let's show the bar even not logged in.
-  // we have an issue with getUserInfo() returning null after a few minutes
-  // it seems.
-  return (
-    <ReactNavbar bg="dark" variant="dark">
-    <Container>
-      <Nav className="me-auto">
-        <Nav.Link href="/">Start</Nav.Link>
-        <Nav.Link href="/home">Home</Nav.Link>
-        <Nav.Link href="/mbtaAlerts">Alerts</Nav.Link>
-        <Nav.Link href="/mbtaRoutesPage">Routes</Nav.Link>
-        <Nav.Link href="/mbtaLiveMap">Live Map</Nav.Link>
-        <Nav.Link href="/mbtaFares">Fares</Nav.Link>
-        <Nav.Link href="/contactsPage">Contact</Nav.Link>
-        <Nav.Link href="/privateUserProfile">Profile</Nav.Link>
-      </Nav>
-    </Container>
-  </ReactNavbar>
+    setUser(getUserInfo());
+  }, []);
 
+  return (
+    <ReactNavbar bg="dark" variant="dark" className="navbar">
+      <Nav className="flex-column">
+        <Nav.Link href="/" className="nav-link">Start</Nav.Link>
+        <Nav.Link href="/home" className="nav-link">Home</Nav.Link>
+        <Nav.Link href="/mbtaAlerts" className="nav-link">Alerts</Nav.Link>
+        <Nav.Link href="/mbtaRoutesPage" className="nav-link">Routes</Nav.Link>
+        <Nav.Link href="/mbtaLiveMap" className="nav-link">Live Map</Nav.Link>
+        <Nav.Link href="/mbtaFares" className="nav-link">Fares</Nav.Link>
+        <Nav.Link href="/contactsPage" className="nav-link">Contact</Nav.Link>
+        <Nav.Link href="/privateUserProfile" className="nav-link">Profile</Nav.Link>
+      </Nav>
+    </ReactNavbar>
   );
 }
