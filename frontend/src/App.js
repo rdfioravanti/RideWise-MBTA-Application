@@ -12,7 +12,7 @@ import Login from "./components/pages/loginPage";
 import Signup from "./components/pages/registerPage";
 import ContactsPage from "./components/pages/contactsPage";
 import MbtaLiveMap from "./components/pages/mbtaLiveMap";
-import MbtaFares from "./components/pages/mbtaFares";
+import MbtaFares from "./components/pages/mbtaFares.js";
 import PrivateUserProfile from "./components/pages/privateUserProfilePage";
 import { createContext, useState, useEffect } from "react";
 import getUserInfo from "./utilities/decodeJwt";
