@@ -1,8 +1,11 @@
 import React, {} from 'react'
 import Card from 'react-bootstrap/Card';
 
+
+
+
 const Landingpage = () => {
-    
+  
     return (
         <Card style={{ width: '30rem' }} className="mx-2 my-2">
         <Card.Body>
@@ -15,6 +18,8 @@ const Landingpage = () => {
         </Card.Body>
       </Card>
     )
+    
 }
+
 
 export default Landingpage
