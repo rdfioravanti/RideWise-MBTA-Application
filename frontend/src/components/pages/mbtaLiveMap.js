@@ -9,13 +9,19 @@ import Point from "ol/geom/Point";
 import { fromLonLat } from "ol/proj";
 import { Style, Icon } from "ol/style";
 import axios from "axios";
+import getUserInfo from "../../utilities/decodeJwt";
 
-//The commented code exists to add stops to the map, but as currently configured there are far too many stops and it places too high a tax on the api call and OpenLayers renderer
-
+/*
+The commented code exists to add stops to the map, but as currently configured there are far
+too many stops. This causes the API to take too long to fetch, and the high amount of icons places 
+too high a tax on the OpenLayers renderer
+*/
 const MapContainer = () => {
   const [map, setMap] = useState(null);
   const [selectedType, setSelectedType] = useState("All");
   const [features, setFeatures] = useState([]);
+  const [user, setUser] = useState({})
+  
 
   const fetchAndRenderData = async () => {
     let url;
@@ -42,7 +48,7 @@ const MapContainer = () => {
       const style = new Style({
         image: new Icon({
           src: "https://openlayers.org/en/latest/examples/data/icon.png",
-          scale: 0.5,
+          scale: 0.4,
         }),
       });
       const feature = new Feature(geometry);
@@ -73,6 +79,7 @@ const MapContainer = () => {
   }; 
 
   useEffect(() => {
+    //setUser(getUserInfo())
     const initialMap = new Map({
       target: "map",
       layers: [
@@ -127,7 +134,8 @@ const MapContainer = () => {
       map.addLayer(vehicleLayer);
     }
   }, [map, features]);
-  
+
+  if (!user) return (<div><h4>Log in to view this page.</h4></div>)
   return (
     <div
       style={{
