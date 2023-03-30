@@ -10,6 +10,8 @@ import { fromLonLat } from "ol/proj";
 import { Style, Icon } from "ol/style";
 import axios from "axios";
 
+//The commented code exists to add stops to the map, but as currently configured there are far too many stops and it places too high a tax on the api call and OpenLayers renderer
+
 const MapContainer = () => {
   const [map, setMap] = useState(null);
   const [selectedType, setSelectedType] = useState("All");
@@ -24,15 +26,15 @@ const MapContainer = () => {
         "https://api-v3.mbta.com/vehicles?filter%5Broute_type%5D=" +
         selectedType;
     }
-    const response = await axios.get(url);
-    const filteredData = response.data.data.filter((vehicle) => {
+    const vehicleResponse = await axios.get(url);
+    const filteredVehicleData = vehicleResponse.data.data.filter((vehicle) => {
       if (selectedType === "All") {
         return true;
       } else {
         return vehicle.relationships.route.data;
       }
     });
-    const newFeatures = filteredData.map((vehicle) => {
+    const vehicleFeatures = filteredVehicleData.map((vehicle) => {
       const [longitude, latitude] = vehicle.attributes["longitude"]
         ? [vehicle.attributes.longitude, vehicle.attributes.latitude]
         : [null, null];
@@ -47,8 +49,28 @@ const MapContainer = () => {
       feature.setStyle(style);
       return feature;
     });
-    setFeatures(newFeatures);
-  };
+  
+  /*  const stopResponse = await axios.get("https://api-v3.mbta.com/stops");
+    const stopFeatures = stopResponse.data.data.map((stop) => {
+      const [longitude, latitude] = stop.attributes["longitude"]
+        ? [stop.attributes.longitude, stop.attributes.latitude]
+        : [null, null];
+      const geometry = new Point(fromLonLat([longitude, latitude]));
+      const style = new Style({
+        image: new Icon({
+          src: "https://openlayers.org/en/latest/examples/data/icon.png",
+          scale: 0.5,
+          color: "#FF5722",
+        }),
+      }); 
+      const feature = new Feature(geometry);
+      feature.setStyle(style);
+      return feature;
+    });
+  
+    setFeatures([...vehicleFeatures, ...stopFeatures]); */
+    setFeatures(vehicleFeatures);
+  }; 
 
   useEffect(() => {
     const initialMap = new Map({
@@ -79,15 +101,30 @@ const MapContainer = () => {
       const vectorSource = new VectorSource({
         features,
       });
-      const vectorLayer = new VectorLayer({
+  
+      const vehicleLayer = new VectorLayer({
         source: vectorSource,
+        style: new Style({
+          image: new Icon({
+            src: "https://openlayers.org/en/latest/examples/data/icon.png",
+            scale: 0.5,
+          }),
+        }),
       });
-      map.getLayers().forEach(layer => {
+  
+    /*  const stopLayer = new VectorLayer({
+        source: new VectorSource({
+          features: features.filter(feature => feature.getProperties().name === "Stop")
+        }),
+      }); */
+  
+      map.getLayers().forEach((layer) => {
         if (layer instanceof VectorLayer) {
           map.removeLayer(layer);
         }
       });
-      map.addLayer(vectorLayer);
+      //map.addLayer(stopLayer);
+      map.addLayer(vehicleLayer);
     }
   }, [map, features]);
   
