@@ -1,32 +1,59 @@
-import React, { useState } from 'react';
+import React from 'react';
+import Card from 'react-bootstrap/Card';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const ContactList = () => {
-  const [contacts, setContacts] = useState([
-    { id: 1, name: 'Information & Support', phone: ' 617-222-3200' },
-    { id: 2, name: 'Emergency Contacts:  Transit Police', phone: ' 617-222-1212' },
-    { id: 3, name: 'Report a railroad crossing gate issue', phone: ' 800-522-8236' },
-  ]);
-
   return (
-    <div>
-      <h1>Contact List</h1>
-      <table>
-        <thead>
-          <tr>
-            
-            <th>Phone</th>
-          </tr>
-        </thead>
-        <tbody>
-          {contacts.map((contact) => (
-            <tr key={contact.id}>
-              <td>{contact.name}</td>
-              <td>{contact.phone}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+
+    <Container fluid>
+      <div style={{ width: '50%' }}>
     </div>
+      <Row className="justify-content-center">
+        <Col>
+          <Card className="my-2">
+            <Card.Header className="text-center">
+              <h4>Contact List</h4>
+            </Card.Header>
+            <Row className="m-0">
+              <Col>
+                <Card className="my-2">
+                  <Card.Body>
+                    <Card.Title>Information & Support</Card.Title>
+                    <Card.Text>	617-222-3200</Card.Text>
+                  </Card.Body>
+                </Card>
+              </Col>
+              <Col>
+                <Card className="my-2">
+                  <Card.Body>
+                    <Card.Title>Emergency Contacts: Transit Police</Card.Title>
+                    <Card.Text>617-222-1212</Card.Text>
+                  </Card.Body>
+                </Card>
+              </Col>
+            </Row>
+            <Row className="m-0">
+              <Col>
+                <Card className="my-2">
+                  <Card.Body>
+                    <Card.Title>Report a railroad crossing gate issue</Card.Title>
+                    <Card.Text>800-522-8236
+</Card.Text>
+                  </Card.Body>
+                </Card>
+              </Col>
+              <Col>
+              </Col>
+            </Row>
+          </Card>
+        </Col>
+        <Col>
+          
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
