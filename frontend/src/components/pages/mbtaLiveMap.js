@@ -13,6 +13,42 @@ import axios from "axios";
 const MapContainer = () => {
   const [map, setMap] = useState(null);
   const [selectedType, setSelectedType] = useState("All");
+  const [features, setFeatures] = useState([]);
+
+  const fetchAndRenderData = async () => {
+    let url;
+    if (selectedType === "All") {
+      url = "https://api-v3.mbta.com/vehicles";
+    } else {
+      url =
+        "https://api-v3.mbta.com/vehicles?filter%5Broute_type%5D=" +
+        selectedType;
+    }
+    const response = await axios.get(url);
+    const filteredData = response.data.data.filter((vehicle) => {
+      if (selectedType === "All") {
+        return true;
+      } else {
+        return vehicle.relationships.route.data;
+      }
+    });
+    const newFeatures = filteredData.map((vehicle) => {
+      const [longitude, latitude] = vehicle.attributes["longitude"]
+        ? [vehicle.attributes.longitude, vehicle.attributes.latitude]
+        : [null, null];
+      const geometry = new Point(fromLonLat([longitude, latitude]));
+      const style = new Style({
+        image: new Icon({
+          src: "https://openlayers.org/en/latest/examples/data/icon.png",
+          scale: 0.5,
+        }),
+      });
+      const feature = new Feature(geometry);
+      feature.setStyle(style);
+      return feature;
+    });
+    setFeatures(newFeatures);
+  };
 
   useEffect(() => {
     const initialMap = new Map({
@@ -31,57 +67,30 @@ const MapContainer = () => {
   }, []);
 
   useEffect(() => {
-    let intervalId;
-    const fetchData = async () => {
-      let url;
-      if (selectedType === "All") {
-        url = "https://api-v3.mbta.com/vehicles";
-      } else {
-        url =
-          "https://api-v3.mbta.com/vehicles?filter%5Broute_type%5D=" +
-          selectedType;
-      }
-      const response = await axios.get(url);
-      const filteredData = response.data.data.filter((vehicle) => {
-        if (selectedType === "All") {
-          return true;
-        } else {
-          return vehicle.relationships.route.data;
-        }
-      });
-      const features = filteredData.map((vehicle) => {
-        const [longitude, latitude] = vehicle.attributes["longitude"]
-          ? [vehicle.attributes.longitude, vehicle.attributes.latitude]
-          : [null, null];
-        const geometry = new Point(fromLonLat([longitude, latitude]));
-        const style = new Style({
-          image: new Icon({
-            src: "https://openlayers.org/en/latest/examples/data/icon.png",
-            scale: 0.5,
-          }),
-        });
-        const feature = new Feature(geometry);
-        feature.setStyle(style);
-        return feature;
+    fetchAndRenderData();
+    let intervalId = setInterval(() => {
+      fetchAndRenderData();
+    }, 3000);
+    return () => clearInterval(intervalId);
+  }, [selectedType]);
+
+  useEffect(() => {
+    if (map) {
+      const vectorSource = new VectorSource({
+        features,
       });
       const vectorLayer = new VectorLayer({
-        source: new VectorSource({
-          features,
-        }),
+        source: vectorSource,
       });
-      if (map) {
-        map.removeLayer(map.getLayers().item(1));
-        map.addLayer(vectorLayer);
-      }
-    };
-
-    intervalId = setInterval(() => {
-      fetchData();
-    }, 3000);
-
-    return () => clearInterval(intervalId);
-  }, [map, selectedType]);
-
+      map.getLayers().forEach(layer => {
+        if (layer instanceof VectorLayer) {
+          map.removeLayer(layer);
+        }
+      });
+      map.addLayer(vectorLayer);
+    }
+  }, [map, features]);
+  
   return (
     <div
       style={{
