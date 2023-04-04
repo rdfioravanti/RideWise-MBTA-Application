@@ -6,10 +6,7 @@ import Col from 'react-bootstrap/Col';
 
 const ContactList = () => {
   return (
-
     <Container fluid>
-      <div style={{ width: '50%' }}>
-    </div>
       <Row className="justify-content-center">
         <Col>
           <Card className="my-2">
@@ -39,22 +36,17 @@ const ContactList = () => {
                 <Card className="my-2">
                   <Card.Body>
                     <Card.Title>Report a railroad crossing gate issue</Card.Title>
-                    <Card.Text>800-522-8236
-</Card.Text>
+                    <Card.Text>800-522-8236</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
-              <Col>
-              </Col>
             </Row>
           </Card>
-        </Col>
-        <Col>
-          
         </Col>
       </Row>
     </Container>
   );
 };
+
 
 export default ContactList;
