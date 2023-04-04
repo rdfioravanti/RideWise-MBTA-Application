@@ -1,19 +1,23 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
+import backgroundImage from "./resources/background.jpg";
 
 const Landingpage = () => {
   return (
     <div
       style={{
         height: "100vh",
+        width: "100vw",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
       }}
     >
-      <Container className="d-flex justify-content-center align-items-center h-100">
-        <Card style={{ width: "40rem" }} className="mx-2 my-2 p-4">
+      <Container fluid className="d-flex justify-content-center align-items-center h-100">
+        <Card style={{ width: "50rem", height: "20rem", outline: "1px solid black" }} className="mx-2 my-2 p-4">
           <Card.Body>
             <Card.Title className="mb-4 display-4">
               RideWise MBTA App
