@@ -4,6 +4,9 @@ import Container from "react-bootstrap/Container";
 import backgroundImage from "./resources/background.jpg";
 
 const Landingpage = () => {
+  const navbarWidth = 80; // Replace 0 with the actual width of your navbar
+  const imageWidth = `calc(100vw - ${navbarWidth}px)`;
+
   return (
     <div
       style={{
@@ -14,6 +17,9 @@ const Landingpage = () => {
         justifyContent: "center",
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: "cover",
+        backgroundPosition: "center",
+        width: imageWidth,
+        margin: "0 auto",
       }}
     >
       <Container fluid className="d-flex justify-content-center align-items-center h-100">
