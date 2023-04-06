@@ -13,6 +13,11 @@ const ratingSchema = new mongoose.Schema(
       required: true,
       label: "rating",
     },
+    comment: {
+      type: String,
+      required: true,
+      label: "comment"
+    },
   },
   { collection: "ratings" }
 );
