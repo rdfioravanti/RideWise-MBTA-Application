@@ -9,7 +9,7 @@ const dbConnection = require('./config/db.config')
 const editUser = require('./routes/userEditUser')
 const deleteUser = require('./routes/userDeleteAll')
 const getAllRatingsRoute = require('./routes/ratingGetAllRatings')
-
+const addRating = require('./routes/ratingCreateRating')
 
 require('dotenv').config();
 const SERVER_PORT = 8081
@@ -24,6 +24,7 @@ app.use('/user', getUserByIdRoute)
 app.use('/user', editUser)
 app.use('/user', deleteUser)
 app.use('/rating', getAllRatingsRoute)
+app.use('/rating', addRating)
 
 
 app.listen(SERVER_PORT, (req, res) => {

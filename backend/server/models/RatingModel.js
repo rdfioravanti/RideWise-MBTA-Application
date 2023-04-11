@@ -5,17 +5,17 @@ const ratingSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      required: true,
+      required: false,
       label: "username",
     },
     rating: {
       type: Number,
-      required: true,
+      required: false,
       label: "rating",
     },
     comment: {
       type: String,
-      required: true,
+      required: false,
       label: "comment"
     },
   },
