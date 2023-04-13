@@ -9,6 +9,7 @@ import Point from "ol/geom/Point";
 import { fromLonLat } from "ol/proj";
 import { Style, Icon } from "ol/style";
 import axios from "axios";
+import mapImage from "./resources/MBTA.png";
 import getUserInfo from "../../utilities/decodeJwt";
 
 /*
@@ -47,8 +48,8 @@ const MapContainer = () => {
       const geometry = new Point(fromLonLat([longitude, latitude]));
       const style = new Style({
         image: new Icon({
-          src: "https://openlayers.org/en/latest/examples/data/icon.png",
-          scale: 0.4,
+          src: mapImage,
+          scale: 0.025,
         }),
       });
       const feature = new Feature(geometry);

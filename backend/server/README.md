@@ -1,6 +1,5 @@
 ### If this is your first time running this service
 copy & paste ( in terminal ) : 
-- git clone https://github.com/Tochey/User_Service.git
 - cd server
 - npm install 
 - npm run server
