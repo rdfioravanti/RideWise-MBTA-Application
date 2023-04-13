@@ -22,6 +22,8 @@ export default function Navbar() {
         <Nav.Link href="/mbtaLiveMap" className="nav-link">Live Map</Nav.Link>
         <Nav.Link href="/mbtaFares" className="nav-link">Fares</Nav.Link>
         <Nav.Link href="/contactsPage" className="nav-link">Contact</Nav.Link>
+        <Nav.Link href="/ratingPage" className="nav-link">Rate Us!</Nav.Link>
+
         <Nav.Link href="/privateUserProfile" className="nav-link">Profile</Nav.Link>
       </Nav>
     </ReactNavbar>
