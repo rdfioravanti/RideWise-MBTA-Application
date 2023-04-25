@@ -3,10 +3,28 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import backgroundImage from "./resources/MBTAlogo.jpg";
 
 
 const ContactList = () => {
+  const navbarWidth = 80; // Replace 0 with the actual width of your navbar
+  const imageWidth = `calc(100vw - ${navbarWidth}px)`;
+  
   return (
+<div
+  style={{
+    height: "100vh",
+    width: "100vw",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundImage: `url(${backgroundImage})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    width: imageWidth,
+    margin: "0 auto",
+  }}
+  >
     <Container fluid>
       <Row className="justify-content-center">
         <Col>
@@ -46,6 +64,7 @@ const ContactList = () => {
         </Col>
       </Row>
     </Container>
+    </div>
   );
 };
 

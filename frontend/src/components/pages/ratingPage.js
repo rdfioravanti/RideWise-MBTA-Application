@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ListGroup, ListGroupItem, Form, Button, Modal, Row, Col, Container } from 'react-bootstrap';
+import backgroundImage from "./resources/MBTAlogo.jpg";
+
 
 const RatingList = () => {
+  
   const [ratings, setRatings] = useState([]);
   const [username, setUsername] = useState('');
   const [rating, setRating] = useState('');
@@ -38,6 +41,7 @@ const RatingList = () => {
       setShowModal(true);
     }
   };
+  
 
   const handleCloseModal = () => setShowModal(false);
 
@@ -100,19 +104,24 @@ const RatingList = () => {
         </Col>
   
         <Col xs={12} md={6}>
-          <h2>Previous Ratings</h2>
-          <ListGroup>
-            {ratings.map((rating) => (
-              <ListGroupItem key={rating.id}>
-                <h5>{rating.username}</h5>
-                <p>Rating: {rating.rating}</p>
-                <p>{rating.comment}</p>
-              </ListGroupItem>
+        <h2>Previous Ratings</h2>
+        <ListGroup>
+      <Row>
+        {ratings.map((rating, index) => (
+          <Col key={index} xs={12} md={6}>
+            <ListGroupItem>
+            <h5>{rating.username}</h5>
+            <p>Rating: {rating.rating}</p>
+            <p>{rating.comment}</p>
+            </ListGroupItem>
+          </Col>
             ))}
-          </ListGroup>
-        </Col>
+        </Row>
+      </ListGroup>
+    </Col>
       </Row>
     </Container>
+   
   );
 };
 

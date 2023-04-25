@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import axios from 'axios';
 
 function Alerts() {
@@ -17,29 +19,24 @@ function Alerts() {
 
   return (
     <div>
-      {alerts.map(alert => (
-        <Card
-        body
-        outline
-        color="success"
-        className="mx-1 my-2"
-        style={{ width: "30rem" }}
-      >
-        <Card.Body>
-        <Card.Title>Route</Card.Title>
-        <Card.Subtitle>{alert.attributes.description}</Card.Subtitle>
-        <Card.Text>{alert.relationships.line.data.id}</Card.Text>
-        </Card.Body>
-      </Card>
-      ))}
-
-        <h1>Routes!</h1>
-      {alerts.map(alert => (
-        <div key={alert.id}>
-          <h3>{alert.relationships.line.data.id}</h3>
-          <p>{alert.attributes.description}</p>
-        </div>
-      ))}
+      <Row>
+        {alerts.map(alert => (
+          <Col sm={6} md={3} key={alert.id}>
+            <Card
+              body
+              outline
+              color="success"
+              className="mx-1 my-2"
+            >
+              <Card.Body>
+                <Card.Title>Route</Card.Title>
+                <Card.Subtitle>{alert.attributes.description}</Card.Subtitle>
+                <Card.Text>{alert.relationships.line.data.id}</Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
     </div>
   );
 }

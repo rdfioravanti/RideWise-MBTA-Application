@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
-import backgroundImage from "./resources/background.jpg";
+import backgroundImage from "./resources/background.jpg"
 
 const Landingpage = () => {
   const navbarWidth = 80; // Replace 0 with the actual width of your navbar

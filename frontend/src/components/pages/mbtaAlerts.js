@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import axios from 'axios';
 
 
 function Alerts() {
   const [alerts, setAlerts] = useState([]);
-
 
   useEffect(() => {
     async function fetchData() {
@@ -17,35 +18,27 @@ function Alerts() {
     fetchData();
   }, []);
 
-
   return (
     <div>
-      {alerts.map(alert => (
-        <Card
-        body
-        outline
-        color="success"
-        className="mx-1 my-2"
-        style={{ width: "30rem" }}
-      >
-        <Card.Body>
-        <Card.Title>Alert</Card.Title>
-        <Card.Text>{alert.attributes.header}{alert.attributes.description}</Card.Text>
-        </Card.Body>
-      </Card>
-      ))}
-
-
-        <h1>Alerts!</h1>
-      {alerts.map(alert => (
-        <div key={alert.id}>
-          <h3>{alert.attributes.header}</h3>
-          <p>{alert.attributes.description}</p>
-        </div>
-      ))}
+      <Row>
+        {alerts.map(alert => (
+          <Col sm={6} md={3} key={alert.id}>
+            <Card
+              body
+              outline
+              color="success"
+              className="mx-1 my-2"
+            >
+              <Card.Body>
+                <Card.Title>Alert</Card.Title>
+                <Card.Text>{alert.attributes.header} {alert.attributes.description}</Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
     </div>
   );
 }
-
 
 export default Alerts;
