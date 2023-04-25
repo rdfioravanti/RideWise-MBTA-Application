@@ -56,31 +56,11 @@ const MapContainer = () => {
       feature.setStyle(style);
       return feature;
     });
-  
-  /*  const stopResponse = await axios.get("https://api-v3.mbta.com/stops");
-    const stopFeatures = stopResponse.data.data.map((stop) => {
-      const [longitude, latitude] = stop.attributes["longitude"]
-        ? [stop.attributes.longitude, stop.attributes.latitude]
-        : [null, null];
-      const geometry = new Point(fromLonLat([longitude, latitude]));
-      const style = new Style({
-        image: new Icon({
-          src: "https://openlayers.org/en/latest/examples/data/icon.png",
-          scale: 0.5,
-          color: "#FF5722",
-        }),
-      }); 
-      const feature = new Feature(geometry);
-      feature.setStyle(style);
-      return feature;
-    });
-  
-    setFeatures([...vehicleFeatures, ...stopFeatures]); */
     setFeatures(vehicleFeatures);
   }; 
 
   useEffect(() => {
-    //setUser(getUserInfo())
+    setUser(getUserInfo())
     const initialMap = new Map({
       target: "map",
       layers: [
@@ -120,18 +100,11 @@ const MapContainer = () => {
         }),
       });
   
-    /*  const stopLayer = new VectorLayer({
-        source: new VectorSource({
-          features: features.filter(feature => feature.getProperties().name === "Stop")
-        }),
-      }); */
-  
       map.getLayers().forEach((layer) => {
         if (layer instanceof VectorLayer) {
           map.removeLayer(layer);
         }
       });
-      //map.addLayer(stopLayer);
       map.addLayer(vehicleLayer);
     }
   }, [map, features]);
