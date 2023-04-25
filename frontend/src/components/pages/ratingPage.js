@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ListGroup, ListGroupItem, Form, Button, Modal, Row, Col, Container } from 'react-bootstrap';
-import backgroundImage from "./resources/MBTAlogo.jpg";
-
 
 const RatingList = () => {
   

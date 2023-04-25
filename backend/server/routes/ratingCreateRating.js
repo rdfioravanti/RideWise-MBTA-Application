@@ -3,24 +3,27 @@ const router = express.Router();
 const ratingModel = require('../models/RatingModel')
 
 router.post('/add', async (req, res) => {
-    const { username, rating, comment    } = req.body
+    const { username, rating, comment } = req.body
 
+    // validate user input
+    if (!username || !rating || !comment) {
+        res.status(400).send({ message: "Username, rating, and comment are required." });
+        return;
+    }
 
-    //creates a new user
+    //creates a new rating
     const createRating = new ratingModel({
         username: username,
         rating: rating,
         comment: comment,
     });
 
-   
     try {
         const saveRating = await createRating.save();
         res.send(saveRating);
     } catch (error) {
-        res.status(400).send({ message: "Error trying to create new user" });
+        res.status(400).send({ message: "Error trying to create new rating" });
     }
-
 })
 
 module.exports = router;
