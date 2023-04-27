@@ -21,6 +21,14 @@ const RatingList = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // check if rating is greater than 5
+    if (rating > 5|rating<=0) {
+      setModalMessage('Rating should be from 1-5.');
+      setShowModal(true);
+      return;
+    }
+    
     const response = await axios.post('http://localhost:8081/rating/add', {
       username: username,
       rating: rating,
@@ -39,6 +47,7 @@ const RatingList = () => {
       setShowModal(true);
     }
   };
+
   
 
   const handleCloseModal = () => setShowModal(false);
@@ -47,7 +56,7 @@ const RatingList = () => {
     <Container>
       <Row>
         <Col xs={12} md={6}>
-          <h2>Add Rating</h2>
+          <h2>Add Rating For Our Application</h2>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formUsername">
               <Form.Label>Username</Form.Label>

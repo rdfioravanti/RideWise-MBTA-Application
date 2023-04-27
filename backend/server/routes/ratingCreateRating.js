@@ -11,6 +11,12 @@ router.post('/add', async (req, res) => {
         return;
     }
 
+    // check if rating is greater than 5
+    if (rating > 5) {
+        res.status(400).send({ message: "Rating should be less than or equal to 5." });
+        return;
+    }
+
     //creates a new rating
     const createRating = new ratingModel({
         username: username,
@@ -25,5 +31,6 @@ router.post('/add', async (req, res) => {
         res.status(400).send({ message: "Error trying to create new rating" });
     }
 })
+
 
 module.exports = router;
