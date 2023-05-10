@@ -59,7 +59,7 @@ const RatingList = () => {
           <h2>Add Rating For Our Application</h2>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formUsername">
-              <Form.Label>Username</Form.Label>
+              <Form.Label>Username:</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter username"
@@ -70,7 +70,7 @@ const RatingList = () => {
             </Form.Group>
   
             <Form.Group controlId="formRating">
-              <Form.Label>Rating</Form.Label>
+              <Form.Label>Rating 1-5:</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter rating"
@@ -81,7 +81,7 @@ const RatingList = () => {
             </Form.Group>
   
             <Form.Group controlId="formComment">
-              <Form.Label>Comment</Form.Label>
+              <Form.Label>Comment:</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={3}
